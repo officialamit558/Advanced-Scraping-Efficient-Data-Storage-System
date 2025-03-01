@@ -1,0 +1,15 @@
+# Python dependencies
+scrapy
+selenium
+httpx
+pymongo
+mysql-connector-python  # MySQL connector
+neo4j
+elasticsearch
+celery
+redis
+transformers
+torch
+flask
+twocaptcha
+pytest

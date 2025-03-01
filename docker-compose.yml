@@ -1,0 +1,41 @@
+# Docker setup for databases
+version: "3.10"
+services:
+  mongo:
+    image: mongo:latest
+    ports: [ "27017:27017" ]
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: contacts
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports: [ "3306:3306" ]
+  neo4j:
+    image: neo4j:latest
+    environment:
+      NEO4J_AUTH: neo4j/password
+    ports: [ "7687:7687", "7474:7474" ]
+  elasticsearch:
+    image: elasticsearch:7.17.0
+    environment:
+      - discovery.type=single-node
+    ports: [ "9200:9200" ]
+  redis:
+    image: redis:latest
+    ports: [ "6379:6379" ]
+  app:
+    build: .
+    command: python src/scraper/scraper.py
+    depends_on:
+      - mongo
+      - mysql
+      - neo4j
+      - elasticsearch
+      - redis
+  celery:
+    build: .
+    command: celery -A src.utils.helpers worker --loglevel=info
+    depends_on:
+      - redis
