@@ -2,6 +2,7 @@
 # src/storage/elasticsearch_index.py
 from elasticsearch import Elasticsearch
 from config.config import Config
+import datetime
 
 class ESIndex:
     def __init__(self):
