@@ -6,6 +6,7 @@ from src.scraper.crawling_map import CrawlingMap
 from scrapy.http import Request, Response
 from unittest.mock import Mock, patch
 import time
+import scrapy
 
 # Fixture for CrawlingMap
 @pytest.fixture

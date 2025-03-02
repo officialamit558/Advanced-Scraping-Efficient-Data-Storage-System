@@ -1,0 +1,73 @@
+<!-- dashboard/templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scraping Journey Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-4">Real-Time Scraping Journey Dashboard</h1>
+        
+        <!-- URL Input Form -->
+        <form method="POST" class="mt-4">
+            <div class="form-group">
+                <label for="url">Enter URL to Scrape:</label>
+                <input type="text" class="form-control" id="url" name="url" placeholder="https://example.com" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Start Scraping</button>
+        </form>
+        
+        <th>Sentiment</th>
+        <!-- In tbody -->
+        <td>{{ log.sentiment if log.sentiment else 'N/A' }}</td>
+
+        <!-- Scraping Logs Table -->
+        <table class="table table-striped mt-4">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Timestamp</th>
+                    <th>URL</th>
+                    <th>Status</th>
+                    <th>Challenge</th>
+                    <th>Extraction Path</th>
+                </tr>
+            </thead>
+            <tbody id="logs-body">
+                {% for log in logs %}
+                <tr>
+                    <td>{{ log.timestamp }}</td>
+                    <td>{{ log.url }}</td>
+                    <td class="{{ 'text-success' if log.status == 'success' else 'text-danger' }}">{{ log.status }}</td>
+                    <td>{{ log.challenge }}</td>
+                    <td>{{ log.path | join(' → ') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        var socket = io();
+        socket.on('update_logs', function(data) {
+            var tbody = document.getElementById('logs-body');
+            tbody.innerHTML = '';
+            data.logs.forEach(log => {
+                var row = `<tr>
+                    <td>${log.timestamp}</td>
+                    <td>${log.url}</td>
+                    <td class="${log.status === 'success' ? 'text-success' : 'text-danger'}">${log.status}</td>
+                    <td>${log.challenge}</td>
+                    <td>${log.path.join(' → ')}</td>
+                </tr>`;
+                tbody.innerHTML += row;
+            });
+        });
+    </script>
+    
+</body>
+</html>

@@ -2,6 +2,7 @@
 # src/utils/helpers.py
 from celery import Celery
 from config.config import Config
+from src.nlp.sentiment import SentimentAnalyzer
 
 app = Celery("tasks", broker=f"redis://{Config.REDIS_HOST}/0")
 

@@ -39,3 +39,5 @@ services:
     command: celery -A src.utils.helpers worker --loglevel=info
     depends_on:
       - redis
+      - mongo
+      - mysql

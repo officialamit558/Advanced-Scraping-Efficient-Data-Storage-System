@@ -13,3 +13,5 @@ torch
 flask
 twocaptcha
 pytest
+gunicorn
+flask-socketio
