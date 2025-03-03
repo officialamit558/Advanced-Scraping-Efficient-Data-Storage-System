@@ -15,3 +15,6 @@
 
 ## Architecture
 - Scraper → Crawling Map → Storage (MongoDB/MySQL) → Neo4j → ElasticSearch → Orchestrator → NLP (optional).
+
+# UI/UX
+![logo](https://github.com/officialamit558/Movies-Recommender-System/blob/main/static/Screenshot%20(259).png)
