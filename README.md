@@ -1,5 +1,6 @@
 
 # Advanced Scraping System
+This document outlines the implementation plan for an AI-driven data extraction and knowledge graph update system. The goal is to scrape web data robustly, store it efficiently, and maintain a dynamic knowledge graph with minimal resource consumption.
 ## Directory Structure
 ```planetext
 advanced_scraping_system/
