@@ -1,5 +1,35 @@
-# Project documentation
+
 # Advanced Scraping System
+## Directory Structure
+advanced_scraping_system/
+├── config/                   # Configuration files
+│   └── config.py             # Database credentials, API keys, etc.
+├── src/                      # Core source code
+│   ├── scraper/              # Scraping logic
+│   │   ├── __init__.py
+│   │   ├── scraper.py        # Main scraper implementation
+│   │   └── crawling_map.py   # Crawling map logger
+│   ├── storage/              # Storage and categorization
+│   │   ├── __init__.py
+│   │   ├── document_store.py # MongoDB for documents
+│   │   ├── contact_store.py  # PostgreSQL for contacts
+│   │   ├── knowledge_graph.py# Neo4j for relationships
+│   │   └── elasticsearch_index.py # ElasticSearch integration
+│   ├── orchestrator/         # Orchestration logic
+│   │   ├── __init__.py
+│   │   └── orchestrator.py   # Data routing agent
+│   ├── nlp/                  # Optional NLP pipeline
+│   │   ├── __init__.py
+│   │   └── sentiment.py      # Sentiment analysis
+│   └── utils/                # Helper functions
+│       ├── __init__.py
+│       └── helpers.py        # Logging, async utilities
+├── tests/                    # Unit and integration tests
+│   ├── test_scraper.py
+│   └── test_storage.py
+├── docker-compose.yml        # Docker setup for databases
+├── README.md                 # Project documentation
+└── requirements.txt          # Python dependencies
 
 ## Setup
 1. Install Docker and Docker Compose.
