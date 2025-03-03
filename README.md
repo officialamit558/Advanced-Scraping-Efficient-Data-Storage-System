@@ -17,4 +17,4 @@
 - Scraper → Crawling Map → Storage (MongoDB/MySQL) → Neo4j → ElasticSearch → Orchestrator → NLP (optional).
 
 # UI/UX
-![logo](Screenshot (276))
+![logo](https://github.com/officialamit558/Advanced-Scraping-Efficient-Data-Storage-System/blob/main/Screenshot%20(276).png)
