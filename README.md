@@ -1,6 +1,7 @@
 
 # Advanced Scraping System
 ## Directory Structure
+```planetext
 advanced_scraping_system/
 ├── config/                   # Configuration files
 │   └── config.py             # Database credentials, API keys, etc.
@@ -30,12 +31,16 @@ advanced_scraping_system/
 ├── docker-compose.yml        # Docker setup for databases
 ├── README.md                 # Project documentation
 └── requirements.txt          # Python dependencies
+```
+
 
 ## Setup
+```
 1. Install Docker and Docker Compose.
 2. Run `docker-compose up -d` to start services (MongoDB, MySQL, Neo4j, ElasticSearch, Redis).
 3. Install dependencies: `pip install -r requirements.txt`.
 4. Set environment variables in `.env` (e.g., TWO_CAPTCHA_API_KEY, MYSQL_URI).
+```
 
 ## Usage
 - Run scraper: `python src/scraper/scraper.py`.
