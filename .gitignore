@@ -1,1 +1,31 @@
 myvenv/
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+*.egg
+.pytest_cache/
+
+# Environment and local files
+.env
+*.log
+*.tar.gz
+
+# Dependency caches
+venv/
+.venv/
+pip_cache/
+*.whl
+
+# Large binaries or data
+*.zip
+*.tar
+*.gz
+*.db
+output.json  # Scrapy output file
+
+# Selenium WebDriver binaries (if downloaded locally)
+chromedriver
+geckodriver
