@@ -10,10 +10,13 @@ class DocumentStore:
         self.db = self.client["scraped_data"]
         self.collection = self.db["documents"]
 
+    # src/storage/document_store.py (reference)
     def save(self, data):
         doc = {
+            "url": data.get("url"),
             "content": data.get("unstructured", ""),
-            "source": data["url"],
+            "title": data.get("title", "No title"),
+            "depth": data.get("depth", 0),
             "timestamp": datetime.datetime.utcnow()
         }
         self.collection.insert_one(doc)

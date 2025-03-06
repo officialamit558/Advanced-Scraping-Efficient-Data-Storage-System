@@ -1,43 +1,91 @@
-# Docker setup for databases
-version: "3.10"
+version: "3.9"
+
 services:
+  web:
+      build: .
+      ports:
+        - "5000:5000"
+  myservice:
+    image: officialamit558/scraping-data:v1  # Your Docker Hub repo
+    deploy:
+      restart_policy:
+        condition: on-failure
+    env_file:
+      - .env  # Load environment variables from a .env file
   mongo:
     image: mongo:latest
-    ports: [ "27017:27017" ]
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
   mysql:
     image: mysql:latest
+    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_HOST: localhost
       MYSQL_DATABASE: contacts
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-    ports: [ "3306:3306" ]
+      MYSQL_USER: root
+      MYSQL_PASSWORD: Config.MYSQL_PASSWORD  # Using .env variable
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
   neo4j:
     image: neo4j:latest
+    restart: always
     environment:
-      NEO4J_AUTH: neo4j/password
-    ports: [ "7687:7687", "7474:7474" ]
+      NEO4J_AUTH: neo4j/Config.NEO4J_AUTH  # Using .env variable
+    ports:
+      - "7687:7687"
+      - "7474:7474"
+    volumes:
+      - neo4j_data:/data
+
   elasticsearch:
     image: elasticsearch:7.17.0
+    restart: always
     environment:
       - discovery.type=single-node
-    ports: [ "9200:9200" ]
+    ports:
+      - "9200:9200"
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+
   redis:
     image: redis:latest
-    ports: [ "6379:6379" ]
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
   app:
     build: .
-    command: python src/scraper/scraper.py
+    command: python dashboard/app.py
     depends_on:
       - mongo
       - mysql
       - neo4j
       - elasticsearch
       - redis
+    volumes:
+      - .:/app
+
   celery:
     build: .
     command: celery -A src.utils.helpers worker --loglevel=info
     depends_on:
+      - app
       - redis
-      - mongo
-      - mysql
+    volumes:
+      - .:/app
+
+volumes:
+  mongo_data:
+  mysql_data:
+  neo4j_data:
+  es_data:
+  redis_data:

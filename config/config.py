@@ -10,22 +10,25 @@ class Config:
     MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/scraped_data")
 
     # MySQL URI (for structured contact data)
-    MYSQL_URI = os.getenv("MYSQL_URI", "mysql+mysqlconnector://user:password@localhost:3306/contacts")
+    MYSQL_HOST = os.getenv("MYSQL_HOST", "localhost")
+    MYSQL_USER = os.getenv("MYSQL_USER", "root")
+    MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD", "@#$Amit1736")
+    MYSQL_DB = os.getenv("MYSQL_DB", "contacts")
     # Neo4j URI (for knowledge graph)
     NEO4J_URI = os.getenv("NEO4J_URI", "bolt://localhost:7687")
     NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
-    NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "password")
+    NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "@#$Amit585")
 
     # ElasticSearch URI (for indexing and fast retrieval)
-    ES_HOST = os.getenv("ES_HOST", "localhost:9200")
+    ES_HOST = os.getenv("ES_HOST", "http://localhost:9200")
 
     # Redis URI (for caching and Celery broker)
-    REDIS_HOST = os.getenv("REDIS_HOST", "localhost:6379")
+    REDIS_HOST = os.getenv("REDIS_HOST", "https://localhost:6379")
     REDIS_DB = os.getenv("REDIS_DB", "0")
     REDIS_URL = f"redis://{REDIS_HOST}/{REDIS_DB}"
 
     # 2Captcha API Key (for CAPTCHA solving)
-    TWO_CAPTCHA_API_KEY = os.getenv("TWO_CAPTCHA_API_KEY", "your_2captcha_api_key_here")
+    TWO_CAPTCHA_API_KEY = os.getenv("TWO_CAPTCHA_API_KEY", "b43f82c2757657cba4176b62b6d32a37")
 
     # Proxy Service Settings (e.g., BrightData)
     PROXY_HOST = os.getenv("PROXY_HOST", "proxy.example.com")
@@ -49,3 +52,8 @@ class Config:
     # Logging Configuration
     LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
     LOG_FILE = os.getenv("LOG_FILE", "scraping_system.log")
+
+    # This for the run the schokitio in the local environment.
+    HOST = os.getenv("HOST", "0.0.0.0")  # Default to all interfaces
+    PORT = int(os.getenv("PORT", 5000))  # Default port 5000
+    DEBUG = os.getenv("DEBUG", "True").lower() == "true"

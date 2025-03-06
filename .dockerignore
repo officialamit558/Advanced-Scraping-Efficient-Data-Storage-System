@@ -1,0 +1,8 @@
+# Ignore unnecessary files
+__pycache__/
+.git/
+node_modules/
+myvenv/
+*.log
+*.sqlite
+*.db
