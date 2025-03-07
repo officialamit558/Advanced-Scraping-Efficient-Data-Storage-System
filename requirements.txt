@@ -15,4 +15,3 @@ twocaptcha
 pytest
 gunicorn
 flask-socketio
-bs4

@@ -1,17 +1,20 @@
-version: "3.9"
+version: "3.8"  # Updated to a widely supported version
 
 services:
-  web:
-      build: .
-      ports:
-        - "5000:5000"
-  myservice:
-    image: officialamit558/scraping-data:v1  # Your Docker Hub repo
-    deploy:
-      restart_policy:
-        condition: on-failure
-    env_file:
-      - .env  # Load environment variables from a .env file
+  mysql:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQLL_HOST: localhost
+      MYSQL_DATABASE: contacts
+      MYSQL_USER: root
+      MYSQL_PASSWORD: Config.MYSQL_PASSWORD
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password  # Ensure compatibility
+
   mongo:
     image: mongo:latest
     restart: always
@@ -20,24 +23,11 @@ services:
     volumes:
       - mongo_data:/data/db
 
-  mysql:
-    image: mysql:latest
-    restart: always
-    environment:
-      MYSQL_HOST: localhost
-      MYSQL_DATABASE: contacts
-      MYSQL_USER: root
-      MYSQL_PASSWORD: Config.MYSQL_PASSWORD  # Using .env variable
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
-
   neo4j:
     image: neo4j:latest
     restart: always
     environment:
-      NEO4J_AUTH: neo4j/Config.NEO4J_AUTH  # Using .env variable
+      NEO4J_AUTH: neo4j/Config.NEO4J_PASSWORD  # Fixed value for simplicity
     ports:
       - "7687:7687"
       - "7474:7474"
@@ -53,6 +43,10 @@ services:
       - "9200:9200"
     volumes:
       - es_data:/usr/share/elasticsearch/data
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
 
   redis:
     image: redis:latest
@@ -63,29 +57,39 @@ services:
       - redis_data:/data
 
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile  # Assumes a Dockerfile exists
     command: python dashboard/app.py
+    ports:
+      - "5000:5000"
     depends_on:
-      - mongo
       - mysql
+      - mongo
       - neo4j
       - elasticsearch
       - redis
     volumes:
       - .:/app
+    environment:
+      - PYTHONUNBUFFERED=1  # Ensure logs are visible in real-time
 
   celery:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     command: celery -A src.utils.helpers worker --loglevel=info
     depends_on:
-      - app
       - redis
+      - app
     volumes:
       - .:/app
+    environment:
+      - PYTHONUNBUFFERED=1
 
 volumes:
-  mongo_data:
   mysql_data:
+  mongo_data:
   neo4j_data:
   es_data:
   redis_data:

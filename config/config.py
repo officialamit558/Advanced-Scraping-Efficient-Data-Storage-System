@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-class Config:
+class Config:  
     """Central configuration class for the Advanced Scraping System."""
 
     # MongoDB URI (for documents and crawling map)
@@ -17,7 +17,7 @@ class Config:
     # Neo4j URI (for knowledge graph)
     NEO4J_URI = os.getenv("NEO4J_URI", "bolt://localhost:7687")
     NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
-    NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "@#$Amit585")
+    NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "password")
 
     # ElasticSearch URI (for indexing and fast retrieval)
     ES_HOST = os.getenv("ES_HOST", "http://localhost:9200")
