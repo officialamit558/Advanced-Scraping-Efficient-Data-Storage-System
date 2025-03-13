@@ -23,7 +23,7 @@ class Config:
     ES_HOST = os.getenv("ES_HOST", "http://localhost:9200")
 
     # Redis URI (for caching and Celery broker)
-    REDIS_HOST = os.getenv("REDIS_HOST", "https://localhost:6379")
+    REDIS_HOST = os.getenv("REDIS_HOST", "localhost:6379")
     REDIS_DB = os.getenv("REDIS_DB", "0")
     REDIS_URL = f"redis://{REDIS_HOST}/{REDIS_DB}"
 

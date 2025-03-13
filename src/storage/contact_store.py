@@ -7,10 +7,10 @@ class ContactStore:
     def __init__(self):
         try:
             self.conn = mysql.connector.connect(
-                host=Config.MYSQL_HOST,
-                user=Config.MYSQL_USER,
-                password=Config.MYSQL_PASSWORD,
-                database=Config.MYSQL_DB
+                host='localhost',
+                user='root',
+                password='@#$Amit1736',
+                database='contacts'
             )
             self.cursor = self.conn.cursor()
             self.create_table()

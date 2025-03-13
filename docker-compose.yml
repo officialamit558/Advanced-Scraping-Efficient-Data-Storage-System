@@ -1,4 +1,4 @@
-version: "3.8"  # Updated to a widely supported version
+# version: "3.8"  # Updated to a widely supported version
 
 services:
   mysql:
